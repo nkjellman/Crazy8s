@@ -1,0 +1,143 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package crazyeights;
+/**
+ *
+ * @author Nick
+ */
+
+import java.util.Random;
+import java.util.ArrayList;
+
+public class Crazy8s {
+  
+  private static final int NUM_CARDS_TO_DEAL = 7;
+  private static final int WILDCARD = 8;
+  
+  private ArrayList<Card> computer;
+  private ArrayList<Card> user;
+  private ArrayList<Card> deck;
+  private ArrayList<Card> discard;
+  
+  private Displayer display;
+  
+  public Crazy8s() {
+    Random rand = new Random();
+    display = new Displayer(this);
+    deck = new ArrayList<Card>(52);
+    user = new ArrayList<Card>(52);
+    computer = new ArrayList<Card>(52);
+    discard = new ArrayList<Card>(52);
+    //Displayer desplay = new Displayer(this);
+    //ArrayList<Integer> deck = new ArrayList<Integer>(51);
+    for (int su = 0; su < 4; su++)
+    {
+      for(int val = 1; val < 14; val++)
+      {
+        deck.add(new Card(su, val));
+      }
+    }
+    Card cardTemp = null;
+    for(int i = 0; i < 52; i++)
+    {
+      int randVal = rand.nextInt(52);
+      cardTemp = deck.get(i);
+      deck.set(i, deck.get(randVal));
+      deck.set(randVal, cardTemp);
+    }
+    
+    for(int i = 0; i < 52; i++)
+    {
+      System.out.println(deck.get(i));
+    }
+  }
+  
+  
+  public void startGame() {
+    Card tempCard = null;
+    for(int i = 0; i < 14; i++)
+    {
+      tempCard = deck.get(i);
+      user.add(tempCard);
+      deck.remove(i);
+      tempCard = deck.get(i);
+      computer.add(tempCard);
+      deck.remove(i);
+    }
+    int i = 0;
+    
+    while(deck.get(i).getValue() == 8)
+    {
+      i++;
+    }
+    discard.add(deck.get(i));
+    deck.remove(i);
+    display.playTurns();
+  }
+  
+  public String getExposedCardImage() {
+    return ""; //remove this line when you complete this method
+  }
+  
+  public String getUserCardImage(int index) {
+    return ""; //remove this line when you complete this method
+  }
+  
+  public int getNumUserCards() {
+    return 7; //remove this line when you complete this method
+  }
+  public int getNumComputerCards() {
+    return 1; //remove this line when you complete this method
+  }
+  
+  public int getNumDeckCards() {
+    return 1; //remove this line when you complete this method
+  }
+  
+  // returns whether finished turn
+  public boolean clickedOnCard(int cardIndex) {
+    // to be completed
+    // get card clicked on from user array (user's hand)
+    // get card from top of discard array (length)
+    //if user card is an eight then
+    //     if top of discard pile is not an eight move user card to discard pile
+    //     return false
+    // else if the user card suit == top of discard pile suit || user card value == top of discard pile value
+    //     move user card to discard pile
+    //     return true
+    // else return false
+    
+    // 
+    return false;
+  }
+  public void clickedOnDeck() {
+    // to be completed
+  }
+  
+  public boolean playComputerTurn() {
+    return true; //remove this line when you complete this method
+  }
+  
+  
+  public void newGame() {
+    // to be completed
+  }
+  
+  public String getStatusTitle() {
+    return ""; //remove this line when you complete this method
+  }
+  
+  public boolean isDone() {
+    return false;//remove this line when you complete this method
+  }
+  
+  public String toString() {
+    return "E: " + discard.size() + " D: " + deck.size() + 
+      " C: " + computer.size() + " U: " + user.size() + " T: " 
+      +    (discard.size()  + deck.size() + 
+            computer.size() +  user.size() );
+  }
+}
